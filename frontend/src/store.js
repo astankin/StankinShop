@@ -1,6 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { thunk } from 'redux-thunk';
-
+import { productListReducer } from './reducers/productReducers'
 
 // import {
 //     productListReducer,
@@ -34,31 +34,31 @@ import { thunk } from 'redux-thunk';
 // } from './reducers/orderReducers';
 
 // Combine reducers
-// const reducer = {
-//     productList: productListReducer,
-//     productDetails: productDetailsReducer,
-//     productDelete: productDeleteReducer,
-//     productCreate: productCreateReducer,
-//     productUpdate: productUpdateReducer,
-//     productReviewCreate: productReviewCreateReducer,
-//     productTopRated: productTopRatedReducer,
+const reducer = {
+    productList: productListReducer,
+    // productDetails: productDetailsReducer,
+    // productDelete: productDeleteReducer,
+    // productCreate: productCreateReducer,
+    // productUpdate: productUpdateReducer,
+    // productReviewCreate: productReviewCreateReducer,
+    // productTopRated: productTopRatedReducer,
 
-//     cart: cartReducer,
-//     userLogin: userLoginReducer,
-//     userRegister: userRegisterReducer,
-//     userDetails: userDetailsReducer,
-//     userUpdateProfile: userUpdateProfileReducer,
-//     userList: userListReducer,
-//     userDelete: userDeleteReducer,
-//     userUpdate: userUpdateReducer,
+    // cart: cartReducer,
+    // userLogin: userLoginReducer,
+    // userRegister: userRegisterReducer,
+    // userDetails: userDetailsReducer,
+    // userUpdateProfile: userUpdateProfileReducer,
+    // userList: userListReducer,
+    // userDelete: userDeleteReducer,
+    // userUpdate: userUpdateReducer,
 
-//     orderCreate: orderCreateReducer,
-//     orderDetails: orderDetailsReducer,
-//     orderPay: orderPayReducer,
-//     orderListMy: orderListMyReducer,
-//     orderList: orderListReducer,
-//     orderDeliver: orderDeliverReducer,
-// };
+    // orderCreate: orderCreateReducer,
+    // orderDetails: orderDetailsReducer,
+    // orderPay: orderPayReducer,
+    // orderListMy: orderListMyReducer,
+    // orderList: orderListReducer,
+    // orderDeliver: orderDeliverReducer,
+};
 
 // Load initial state from localStorage
 const cartItemsFromStorage = localStorage.getItem('cartItems')
@@ -83,7 +83,7 @@ const initialState = {
 };
 
 // Configure the store
-const reducer = combineReducers({})
+
 const store = configureStore({
     reducer,
     preloadedState: initialState,
