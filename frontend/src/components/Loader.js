@@ -2,15 +2,14 @@ import React from "react";
 import { Spinner } from 'react-bootstrap';
 
 function Loader() {
-
     return (
         <Spinner 
           animation='border'
           role='status'
           style={{
-            hight: '100px',
             width: '100px',
-            margin: 'auto' ,
+            height: '100px',
+            margin: 'auto',
             display: 'block'
           }}
         >
@@ -19,4 +18,4 @@ function Loader() {
     )
 };
 
-export default Loader
+export default Loader;
