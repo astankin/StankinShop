@@ -1,16 +1,16 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { thunk } from 'redux-thunk';
-import { productListReducer } from './reducers/productReducers'
 
-// import {
-//     productListReducer,
-//     productDetailsReducer,
-//     productDeleteReducer,
-//     productCreateReducer,
-//     productUpdateReducer,
-//     productReviewCreateReducer,
-//     productTopRatedReducer,
-// } from './reducers/productReducers';
+
+import {
+    productListReducer,
+    productDetailsReducer,
+    // productDeleteReducer,
+    // productCreateReducer,
+    // productUpdateReducer,
+    // productReviewCreateReducer,
+    // productTopRatedReducer,
+} from './reducers/productReducers';
 
 // import { cartReducer } from './reducers/cartReducers';
 
@@ -36,7 +36,7 @@ import { productListReducer } from './reducers/productReducers'
 // Combine reducers
 const reducer = {
     productList: productListReducer,
-    // productDetails: productDetailsReducer,
+    productDetails: productDetailsReducer,
     // productDelete: productDeleteReducer,
     // productCreate: productCreateReducer,
     // productUpdate: productUpdateReducer,

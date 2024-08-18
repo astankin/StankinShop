@@ -1,29 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';  // Correctly using useParams here
+import React, { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { Row, Col, Image, ListGroup, Button, Card } from 'react-bootstrap';
 import Rating from '../components/Rating';
-import axios from 'axios';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
+import { useDispatch, useSelector } from 'react-redux';
+import { listProductDetails } from '../actions/productActions';
 
 function ProductScreen() {
-  const { id } = useParams();  // Getting the id from the URL using useParams
-  const [product, setProduct] = useState({});  // Initialize with an empty object
+  const { id } = useParams(); // Use useParams to get the product ID from the URL
+  const dispatch = useDispatch();
+  
+  const productDetails = useSelector((state) => state.productDetails);
+  const { loading, error, product } = productDetails;
 
   useEffect(() => {
-    async function fetchProduct() {
-      try {
-        const { data } = await axios.get(`/api/products/${id}`);  // Use id from useParams
-        setProduct(data);
-      } catch (error) {
-        console.error('Error fetching product:', error);
-      }
-    }
-    fetchProduct();
-  }, [id]);  // Add id as a dependency so that useEffect runs when id changes
+    dispatch(listProductDetails(id));
+  }, [dispatch, id]);
 
   return (
     <div>
       <Link to='/' className='btn btn-light my-3'>Go Back</Link>
-      <Row>
+      {loading ?
+          <Loader />
+          : error
+            ? <Message variant='danger'>{error}</Message>
+          :(
+            <Row>
         <Col md={6}>
           <Image src={product.image} alt={product.name} fluid />
         </Col>
@@ -68,6 +71,10 @@ function ProductScreen() {
           </Card>
         </Col>
       </Row>
+          )
+
+      }
+      
     </div>
   );
 }
