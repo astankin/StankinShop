@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { thunk } from 'redux-thunk';
 
 
+
 import {
     productListReducer,
     productDetailsReducer,
@@ -12,7 +13,7 @@ import {
     // productTopRatedReducer,
 } from './reducers/productReducers';
 
-// import { cartReducer } from './reducers/cartReducers';
+import { cartReducer } from './reducers/cartReducers';
 
 // import {
 //     userLoginReducer,
@@ -43,7 +44,7 @@ const reducer = {
     // productReviewCreate: productReviewCreateReducer,
     // productTopRated: productTopRatedReducer,
 
-    // cart: cartReducer,
+    cart: cartReducer,
     // userLogin: userLoginReducer,
     // userRegister: userRegisterReducer,
     // userDetails: userDetailsReducer,
