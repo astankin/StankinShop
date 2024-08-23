@@ -3,7 +3,7 @@ import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Form, ListGroup, Image, Button, Card } from 'react-bootstrap';
 import Message from '../components/Message';
-import { addToCart } from '../actions/cartActions';
+import { addToCart, removeFromCart } from '../actions/cartActions';
 
 export default function CartScreen() {
   const { id: productId } = useParams(); // useParams to get the product ID from the URL
@@ -24,7 +24,7 @@ export default function CartScreen() {
   }, [dispatch, productId, qty]);
 
   const removeFromCartHandler = (id) => {
-      // console.log('remove:', id)
+      dispatch(removeFromCart(id))
   };
 
   const checkoutHandler = () => {
