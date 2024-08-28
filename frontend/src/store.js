@@ -15,15 +15,15 @@ import {
 
 import { cartReducer } from './reducers/cartReducers';
 
-// import {
-//     userLoginReducer,
-//     userRegisterReducer,
-//     userDetailsReducer,
-//     userUpdateProfileReducer,
-//     userListReducer,
-//     userDeleteReducer,
-//     userUpdateReducer,
-// } from './reducers/userReducers';
+import {
+    userLoginReducer,
+    // userRegisterReducer,
+    // userDetailsReducer,
+    // userUpdateProfileReducer,
+    // userListReducer,
+    // userDeleteReducer,
+    // userUpdateReducer,
+} from './reducers/userReducers';
 
 // import {
 //     orderCreateReducer,
@@ -45,7 +45,7 @@ const reducer = {
     // productTopRated: productTopRatedReducer,
 
     cart: cartReducer,
-    // userLogin: userLoginReducer,
+    userLogin: userLoginReducer,
     // userRegister: userRegisterReducer,
     // userDetails: userDetailsReducer,
     // userUpdateProfile: userUpdateProfileReducer,
