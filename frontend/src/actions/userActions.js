@@ -40,4 +40,9 @@ import {
                 : error.message,
         })
     }
+ };
+
+ export const logout = () => (dispatch) => {
+    localStorage.removeItem('userinfo')
+    dispatch({type:USER_LOGOUT})
  }
