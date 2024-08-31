@@ -51,7 +51,7 @@ def updateUserProfile(request):
     serializer = UserSerializerWithToken(user, many=False)
     data = request.data
     user.first_name = data['name']
-    user.user_name = data['user_name']
+    user.username = data['email']
     user.email = data['email']
     
     if data['password'] != "":
