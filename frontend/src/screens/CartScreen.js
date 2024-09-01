@@ -13,8 +13,9 @@ export default function CartScreen() {
   const qty = location.search ? Number(location.search.split('=')[1]) : 1;
   const cart = useSelector(state => state.cart)
   const{ cartItems } = cart
-  
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,8 +29,12 @@ export default function CartScreen() {
   };
 
   const checkoutHandler = () => {
-      navigate('/login?redirect=shipping')
-  };
+    if (userInfo) {
+        navigate('/shipping');
+    } else {
+        navigate('/login');
+    }
+};
 
   return (
     <Row>
