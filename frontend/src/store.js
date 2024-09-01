@@ -25,14 +25,14 @@ import {
     // userUpdateReducer,
 } from './reducers/userReducers';
 
-// import {
-//     orderCreateReducer,
-//     orderDetailsReducer,
-//     orderPayReducer,
-//     orderListMyReducer,
-//     orderListReducer,
-//     orderDeliverReducer,
-// } from './reducers/orderReducers';
+import {
+    orderCreateReducer,
+    // orderDetailsReducer,
+    // orderPayReducer,
+    // orderListMyReducer,
+    // orderListReducer,
+    // orderDeliverReducer,
+} from './reducers/orderReducers';
 
 // Combine reducers
 const reducer = {
@@ -53,7 +53,7 @@ const reducer = {
     // userDelete: userDeleteReducer,
     // userUpdate: userUpdateReducer,
 
-    // orderCreate: orderCreateReducer,
+    orderCreate: orderCreateReducer,
     // orderDetails: orderDetailsReducer,
     // orderPay: orderPayReducer,
     // orderListMy: orderListMyReducer,
