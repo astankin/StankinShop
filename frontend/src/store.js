@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { thunk } from 'redux-thunk';
 
 
@@ -27,7 +27,7 @@ import {
 
 import {
     orderCreateReducer,
-    // orderDetailsReducer,
+    orderDetailsReducer,
     // orderPayReducer,
     // orderListMyReducer,
     // orderListReducer,
@@ -54,7 +54,7 @@ const reducer = {
     // userUpdate: userUpdateReducer,
 
     orderCreate: orderCreateReducer,
-    // orderDetails: orderDetailsReducer,
+    orderDetails: orderDetailsReducer,
     // orderPay: orderPayReducer,
     // orderListMy: orderListMyReducer,
     // orderList: orderListReducer,
