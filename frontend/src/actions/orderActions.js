@@ -155,7 +155,7 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
                 : error.message,
         })
     }
-}
+};
 
 
 export const deliverOrder = (order) => async (dispatch, getState) => {

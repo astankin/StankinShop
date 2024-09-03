@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-// import { PayPalButton } from 'react-paypal-button-v2';
+import { PayPalButton } from 'react-paypal-button-v2';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getOrderDetails, payOrder, deliverOrder } from '../actions/orderActions';
@@ -18,8 +18,8 @@ function OrderScreen() {
     const orderDetails = useSelector(state => state.orderDetails);
     const { order, error, loading } = orderDetails;
 
-    // const orderPay = useSelector(state => state.orderPay);
-    // const { loading: loadingPay, success: successPay } = orderPay;
+    const orderPay = useSelector(state => state.orderPay);
+    const { loading: loadingPay, success: successPay } = orderPay;
 
     // const orderDeliver = useSelector(state => state.orderDeliver);
     // const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
@@ -34,7 +34,7 @@ function OrderScreen() {
     const addPayPalScript = () => {
         const script = document.createElement('script');
         script.type = 'text/javascript';
-        script.src = 'https://www.paypal.com/sdk/js?client-id=AeDXja18CkwFUkL-HQPySbzZsiTrN52cG13mf9Yz7KiV2vNnGfTDP0wDEN9sGlhZHrbb_USawcJzVDgn';
+        script.src = 'https://www.paypal.com/sdk/js?client-id=AX_h1Cmkk057BqB6ocDKZj1j6I93kmT6EX3szDYz2Pv145xiPBNBXoCtGyEiC27jZqJHiTvzDGbZUMoW';
         script.async = true;
         script.onload = () => {
             setSdkReady(true);
@@ -42,14 +42,16 @@ function OrderScreen() {
         document.body.appendChild(script);
     };
 
+    //AX_h1Cmkk057BqB6ocDKZj1j6I93kmT6EX3szDYz2Pv145xiPBNBXoCtGyEiC27jZqJHiTvzDGbZUMoW
+
     useEffect(() => {
         if (!userInfo) {
             navigate('/login');
         }
 
-        if (!order || order._id !== Number(orderId) ){//|| successDeliver) {
+        if (!order || successPay || order._id !== Number(orderId) ){//|| successDeliver) {
             dispatch({ type: ORDER_PAY_RESET });
-            dispatch({ type: ORDER_DELIVER_RESET });
+            // dispatch({ type: ORDER_DELIVER_RESET });
 
             dispatch(getOrderDetails(orderId));
         } else if (!order.isPaid) {
@@ -59,7 +61,7 @@ function OrderScreen() {
                 setSdkReady(true);
             }
         }
-    }, [dispatch, order, orderId, userInfo, navigate]);
+    }, [dispatch, order, successPay, orderId, userInfo, navigate]);
 
     const successPaymentHandler = (paymentResult) => {
         dispatch(payOrder(orderId, paymentResult));
@@ -175,17 +177,18 @@ function OrderScreen() {
 
                             {!order.isPaid && (
                                 <ListGroup.Item>
-                                    {/* {loadingPay && <Loader />} */}
-                                    {/* {!sdkReady ? (
-                                        <Loader />
-                                    ) : (
-                                        <PayPalButton
-                                            amount={order.totalPrice}
+                                    {loadingPay && <Loader />}
+
+                                        {!sdkReady ? (
+                                            <Loader />
+                                        ) : (
+                                            <PayPalButton 
+                                            amount={order.totalPrice} 
                                             onSuccess={successPaymentHandler}
-                                        />
-                                    )} */}
-                                </ListGroup.Item>
-                            )}
+                                            />
+                                        )}
+                                        </ListGroup.Item>
+                                    )}
                         </ListGroup>
                         {/* {loadingDeliver && <Loader />} */}
                         {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (

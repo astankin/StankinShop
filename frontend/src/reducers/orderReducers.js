@@ -112,7 +112,7 @@ export const orderPayReducer = (state = {}, action) => {
         default:
             return state
     }
-}
+};
 
 
 export const orderDeliverReducer = (state = {}, action) => {
@@ -140,7 +140,7 @@ export const orderDeliverReducer = (state = {}, action) => {
         default:
             return state
     }
-}
+};
 
 
 export const orderListMyReducer = (state = { orders: [] }, action) => {
@@ -170,7 +170,7 @@ export const orderListMyReducer = (state = { orders: [] }, action) => {
         default:
             return state
     }
-}
+};
 
 
 
