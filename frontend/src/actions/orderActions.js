@@ -158,7 +158,7 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
 };
 
 
-export const setOrderAsPaid = (id) => async (dispatch, getState) => {
+export const setOrderAsPaid = (order) => async (dispatch, getState) => {
     try {
         dispatch({ type: ORDER_PAY_REQUEST });
 
@@ -172,7 +172,7 @@ export const setOrderAsPaid = (id) => async (dispatch, getState) => {
         };
 
         // Update the order status to paid
-        await axios.put(`/api/orders/${id}/pay/`, {}, config);
+        await axios.put(`/api/orders/${order._id}/pay/`, {}, config);
 
         dispatch({
             type: ORDER_PAY_SUCCESS,

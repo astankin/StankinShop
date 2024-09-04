@@ -64,17 +64,16 @@ function OrderScreen() {
         }
     }, [dispatch, order, successPay, orderId, userInfo, navigate]);
 
-    const successPaymentHandler = (paymentResult) => {
-        dispatch(payOrder(orderId, paymentResult));
-    };
+    // const successPaymentHandler = (paymentResult) => {
+    //     dispatch(payOrder(orderId, paymentResult));
+    // };
 
     const deliverHandler = () => {
         dispatch(deliverOrder(order));
     };
 
     const handleButtonClick = () => {
-        // Dispatch action to set order as paid
-        dispatch(setOrderAsPaid(orderId));
+        dispatch(setOrderAsPaid(order));
     };
 
 
