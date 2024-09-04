@@ -82,39 +82,39 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
     try {
         dispatch({
             type: ORDER_DETAILS_REQUEST
-        })
+        });
 
         const {
             userLogin: { userInfo },
-        } = getState()
+        } = getState();
 
         const config = {
             headers: {
                 'Content-type': 'application/json',
                 Authorization: `Bearer ${userInfo.token}`
             }
-        }
+        };
 
-        const { data } = await axios.get(
-            `/api/orders/${id}/`,
-            config
-        )
+        const { data } = await axios.get(`/api/orders/${id}/`, config);
+
+        console.log('Data received:', data);
 
         dispatch({
             type: ORDER_DETAILS_SUCCESS,
             payload: data
-        })
-
+        });
 
     } catch (error) {
+        console.error('Error fetching order details:', error);
+
         dispatch({
             type: ORDER_DETAILS_FAIL,
             payload: error.response && error.response.data.detail
                 ? error.response.data.detail
                 : error.message,
-        })
+        });
     }
-}
+};
 
 
 

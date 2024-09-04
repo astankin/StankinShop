@@ -60,35 +60,34 @@ export const orderCreateReducer = (state = {}, action) => {
 }
 
 
-export const orderDetailsReducer = (
-    state = { loading: true, order: { orderItems: [], shippingAddress: {} } }, 
-    action
-  ) => {
+export const orderDetailsReducer = (state = { loading: true, orderItems: [], shippingAddress: {} }, action) => {
     switch (action.type) {
-      case ORDER_DETAILS_REQUEST:
-        return {
-          ...state,
-          loading: true,
-        };
-  
-      case ORDER_DETAILS_SUCCESS:
-        return {
-          ...state,  // Spread existing state
-          loading: false,
-          order: { ...action.payload },  // Ensure a new order object is returned
-        };
-  
-      case ORDER_DETAILS_FAIL:
-        return {
-          ...state,
-          loading: false,
-          error: action.payload,
-        };
-  
-      default:
-        return state;
+        case ORDER_DETAILS_REQUEST:
+            return {
+                ...state,
+                loading: true
+            };
+
+        case ORDER_DETAILS_SUCCESS:
+            return {
+                loading: false,
+                order: {
+                    ...action.payload // Ensure immutability here
+                }
+            };
+
+        case ORDER_DETAILS_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            };
+
+        default:
+            return state;
     }
-  };
+};
+
+
   
 
 
