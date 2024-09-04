@@ -147,28 +147,31 @@ export const orderListMyReducer = (state = { orders: [] }, action) => {
     switch (action.type) {
         case ORDER_LIST_MY_REQUEST:
             return {
+                ...state,  // Keep the current state properties
                 loading: true
-            }
+            };
 
         case ORDER_LIST_MY_SUCCESS:
             return {
+                ...state,  // Keep the current state properties
                 loading: false,
                 orders: action.payload
-            }
+            };
 
         case ORDER_LIST_MY_FAIL:
             return {
+                ...state,  // Keep the current state properties
                 loading: false,
                 error: action.payload
-            }
+            };
 
         case ORDER_LIST_MY_RESET:
             return {
-                orders: []
-            }
+                orders: []  // Reset orders while other state properties remain intact
+            };
 
         default:
-            return state
+            return state;
     }
 };
 

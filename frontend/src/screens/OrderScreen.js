@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { PayPalButton } from 'react-paypal-button-v2';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { getOrderDetails, payOrder, deliverOrder } from '../actions/orderActions';
+import { getOrderDetails, payOrder, deliverOrder, setOrderAsPaid } from '../actions/orderActions';
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../constants/orderConstants';
 
 function OrderScreen() {
@@ -34,7 +34,7 @@ function OrderScreen() {
     const addPayPalScript = () => {
         const script = document.createElement('script');
         script.type = 'text/javascript';
-        script.src = 'https://www.paypal.com/sdk/js?client-id=AX_h1Cmkk057BqB6ocDKZj1j6I93kmT6EX3szDYz2Pv145xiPBNBXoCtGyEiC27jZqJHiTvzDGbZUMoW';
+        script.src = 'https://www.paypal.com/sdk/js?client-id=AZlXwl9ugLTPQ0roQZAjjY6vR1QUVLaX7twtDLDhPH11hCJrWTJquOvIfoZwKL63VVcnOLqSp4pLSK3k';
         script.async = true;
         script.onload = () => {
             setSdkReady(true);
@@ -43,6 +43,7 @@ function OrderScreen() {
     };
 
     //AX_h1Cmkk057BqB6ocDKZj1j6I93kmT6EX3szDYz2Pv145xiPBNBXoCtGyEiC27jZqJHiTvzDGbZUMoW
+    //AZlXwl9ugLTPQ0roQZAjjY6vR1QUVLaX7twtDLDhPH11hCJrWTJquOvIfoZwKL63VVcnOLqSp4pLSK3k
 
     useEffect(() => {
         if (!userInfo) {
@@ -70,6 +71,12 @@ function OrderScreen() {
     const deliverHandler = () => {
         dispatch(deliverOrder(order));
     };
+
+    const handleButtonClick = () => {
+        // Dispatch action to set order as paid
+        dispatch(setOrderAsPaid(orderId));
+    };
+
 
     return loading ? (
         <Loader />
@@ -183,8 +190,10 @@ function OrderScreen() {
                                             <Loader />
                                         ) : (
                                             <PayPalButton 
-                                            amount={order.totalPrice} 
-                                            onSuccess={successPaymentHandler}
+                                            amount={order.totalPrice}
+                                            // onSuccess={successPaymentHandler}
+                                            onClick={handleButtonClick}
+
                                             />
                                         )}
                                         </ListGroup.Item>

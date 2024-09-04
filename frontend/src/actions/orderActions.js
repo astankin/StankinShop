@@ -158,6 +158,37 @@ export const payOrder = (id, paymentResult) => async (dispatch, getState) => {
 };
 
 
+export const setOrderAsPaid = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: ORDER_PAY_REQUEST });
+
+        const { userLogin: { userInfo } } = getState();
+
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        };
+
+        // Update the order status to paid
+        await axios.put(`/api/orders/${id}/pay/`, {}, config);
+
+        dispatch({
+            type: ORDER_PAY_SUCCESS,
+            payload: { isPaid: true }
+        });
+    } catch (error) {
+        dispatch({
+            type: ORDER_PAY_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message,
+        });
+    }
+};
+
+
 export const deliverOrder = (order) => async (dispatch, getState) => {
     try {
         dispatch({

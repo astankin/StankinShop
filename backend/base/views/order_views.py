@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from django.shortcuts import render
 
 from rest_framework.decorators import api_view, permission_classes
@@ -101,16 +101,36 @@ def getOrderById(request, pk):
         return Response({'detail': 'Order does not exist'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+# @api_view(['PUT'])
+# @permission_classes([IsAuthenticated])
+# def updateOrderToPaid(request, pk):
+#     order = Order.objects.get(_id=pk)
+
+#     order.isPaid = True
+#     order.paidAt = datetime.now()
+#     order.save()
+
+#     return Response('Order was paid')
+
+
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def updateOrderToPaid(request, pk):
-    order = Order.objects.get(_id=pk)
+    try:
+        # Retrieve the order by ID
+        order = Order.objects.get(_id=pk)
+        
+        # Update the order status
+        order.isPaid = True
+        order.paidAt = datetime.now()
+        order.save()
 
-    order.isPaid = True
-    order.paidAt = datetime.now()
-    order.save()
+        return Response({'message': 'Order was paid'})
+    except Order.DoesNotExist:
+        return Response({'error': 'Order not found'}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    return Response('Order was paid')
 
 
 @api_view(['PUT'])
