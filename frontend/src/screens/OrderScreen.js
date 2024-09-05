@@ -8,52 +8,34 @@ import Loader from '../components/Loader';
 import { getOrderDetails, payOrder, deliverOrder, setOrderAsPaid } from '../actions/orderActions';
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../constants/orderConstants';
 
+
 function OrderScreen() {
-    const { id: orderId } = useParams();  // Use useParams to get the orderId from the route
+    const { id: orderId } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [sdkReady, setSdkReady] = useState(false);
 
-    const orderDetails = useSelector(state => state.orderDetails);
+    const orderDetails = useSelector((state) => state.orderDetails);
     const { order, error, loading } = orderDetails;
 
-    const orderPay = useSelector(state => state.orderPay);
+    const orderPay = useSelector((state) => state.orderPay);
     const { loading: loadingPay, success: successPay } = orderPay;
 
-    // const orderDeliver = useSelector(state => state.orderDeliver);
-    // const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
+    const orderDeliver = useSelector((state) => state.orderDeliver || {});
+    const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
 
-    const userLogin = useSelector(state => state.userLogin);
+    const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
-
-    if (!loading && !error) {
-        order.itemsPrice = order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2);
-    }
-
-    const addPayPalScript = () => {
-        const script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = 'https://www.paypal.com/sdk/js?client-id=AZlXwl9ugLTPQ0roQZAjjY6vR1QUVLaX7twtDLDhPH11hCJrWTJquOvIfoZwKL63VVcnOLqSp4pLSK3k';
-        script.async = true;
-        script.onload = () => {
-            setSdkReady(true);
-        };
-        document.body.appendChild(script);
-    };
-
-    //AX_h1Cmkk057BqB6ocDKZj1j6I93kmT6EX3szDYz2Pv145xiPBNBXoCtGyEiC27jZqJHiTvzDGbZUMoW
-    //AZlXwl9ugLTPQ0roQZAjjY6vR1QUVLaX7twtDLDhPH11hCJrWTJquOvIfoZwKL63VVcnOLqSp4pLSK3k
 
     useEffect(() => {
         if (!userInfo) {
             navigate('/login');
         }
 
-        if (!order || successPay || order._id !== Number(orderId) ){//|| successDeliver) {
+        if (!order || successPay || successDeliver || order._id !== Number(orderId)) {
             dispatch({ type: ORDER_PAY_RESET });
-            // dispatch({ type: ORDER_DELIVER_RESET });
-
+            dispatch({ type: ORDER_DELIVER_RESET });
             dispatch(getOrderDetails(orderId));
         } else if (!order.isPaid) {
             if (!window.paypal) {
@@ -62,20 +44,30 @@ function OrderScreen() {
                 setSdkReady(true);
             }
         }
-    }, [dispatch, order, successPay, orderId, userInfo, navigate]);
+    }, [dispatch, order, successPay, successDeliver, orderId, userInfo, navigate]);
 
-    // const successPaymentHandler = (paymentResult) => {
-    //     dispatch(payOrder(orderId, paymentResult));
-    // };
+    const addPayPalScript = () => {
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID';
+        script.async = true;
+        script.onload = () => {
+            setSdkReady(true);
+        };
+        document.body.appendChild(script);
+    };
+
+    const successPaymentHandler = (paymentResult) => {
+        dispatch(payOrder(orderId, paymentResult));
+    };
 
     const deliverHandler = () => {
         dispatch(deliverOrder(order));
     };
 
-    const handleButtonClick = () => {
-        dispatch(setOrderAsPaid(order));
+    const calculateItemsPrice = () => {
+        return order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2);
     };
-
 
     return loading ? (
         <Loader />
@@ -89,14 +81,17 @@ function OrderScreen() {
                     <ListGroup variant="flush">
                         <ListGroup.Item>
                             <h2>Shipping</h2>
-                            <p><strong>Name: </strong> {order.user.name}</p>
-                            <p><strong>Email: </strong><a href={`mailto:${order.user.email}`}>{order.user.email}</a></p>
+                            <p>
+                                <strong>Name: </strong> {order.user.name}
+                            </p>
+                            <p>
+                                <strong>Email: </strong>
+                                <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
+                            </p>
                             <p>
                                 <strong>Shipping: </strong>
-                                {order.shippingAddress.address}, {order.shippingAddress.city}
-                                {'  '}
-                                {order.shippingAddress.postalCode},
-                                {'  '}
+                                {order.shippingAddress.address}, {order.shippingAddress.city}{' '}
+                                {order.shippingAddress.postalCode},{' '}
                                 {order.shippingAddress.country}
                             </p>
                             {order.isDelivered ? (
@@ -121,9 +116,9 @@ function OrderScreen() {
 
                         <ListGroup.Item>
                             <h2>Order Items</h2>
-                            {order.orderItems.length === 0 ? <Message variant="info">
-                                Order is empty
-                            </Message> : (
+                            {order.orderItems.length === 0 ? (
+                                <Message variant="info">Order is empty</Message>
+                            ) : (
                                 <ListGroup variant="flush">
                                     {order.orderItems.map((item, index) => (
                                         <ListGroup.Item key={index}>
@@ -135,7 +130,8 @@ function OrderScreen() {
                                                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                                                 </Col>
                                                 <Col md={4}>
-                                                    {item.qty} X ${item.price} = ${(item.qty * item.price).toFixed(2)}
+                                                    {item.qty} X ${item.price} = $
+                                                    {(item.qty * item.price).toFixed(2)}
                                                 </Col>
                                             </Row>
                                         </ListGroup.Item>
@@ -156,7 +152,7 @@ function OrderScreen() {
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Items:</Col>
-                                    <Col>${order.itemsPrice}</Col>
+                                    <Col>${calculateItemsPrice()}</Col>
                                 </Row>
                             </ListGroup.Item>
 
@@ -184,21 +180,19 @@ function OrderScreen() {
                             {!order.isPaid && (
                                 <ListGroup.Item>
                                     {loadingPay && <Loader />}
-
-                                        {!sdkReady ? (
-                                            <Loader />
-                                        ) : (
-                                            <PayPalButton 
+                                    {!sdkReady ? (
+                                        <Loader />
+                                    ) : (
+                                        <PayPalButton
                                             amount={order.totalPrice}
-                                            // onSuccess={successPaymentHandler}
-                                            onClick={handleButtonClick}
-
-                                            />
-                                        )}
-                                        </ListGroup.Item>
+                                            onSuccess={successPaymentHandler}
+                                        />
                                     )}
+                                </ListGroup.Item>
+                            )}
                         </ListGroup>
-                        {/* {loadingDeliver && <Loader />} */}
+
+                        {loadingDeliver && <Loader />}
                         {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
                             <ListGroup.Item>
                                 <Button
