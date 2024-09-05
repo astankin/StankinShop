@@ -190,8 +190,8 @@ function OrderScreen() {
                                     ) : (
                                         <PayPalButton 
                                             amount={order.totalPrice}
-                                            // onSuccess={successPaymentHandler}
-                                            onClick={handleButtonClick}
+                                            onSuccess={successPaymentHandler}
+                                            // onClick={handleButtonClick}
 
                                             />
                                     )}
