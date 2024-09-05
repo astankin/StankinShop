@@ -49,7 +49,8 @@ function OrderScreen() {
     const addPayPalScript = () => {
         const script = document.createElement('script');
         script.type = 'text/javascript';
-        script.src = 'https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID';
+        script.src = 'https://www.paypal.com/sdk/js?client-id=AZlXwl9ugLTPQ0roQZAjjY6vR1QUVLaX7twtDLDhPH11hCJrWTJquOvIfoZwKL63VVcnOLqSp4pLSK3k';
+        //AZlXwl9ugLTPQ0roQZAjjY6vR1QUVLaX7twtDLDhPH11hCJrWTJquOvIfoZwKL63VVcnOLqSp4pLSK3k
         script.async = true;
         script.onload = () => {
             setSdkReady(true);
@@ -59,6 +60,10 @@ function OrderScreen() {
 
     const successPaymentHandler = (paymentResult) => {
         dispatch(payOrder(orderId, paymentResult));
+    };
+
+    const handleButtonClick = () => {
+        dispatch(setOrderAsPaid(order));
     };
 
     const deliverHandler = () => {
@@ -183,10 +188,12 @@ function OrderScreen() {
                                     {!sdkReady ? (
                                         <Loader />
                                     ) : (
-                                        <PayPalButton
+                                        <PayPalButton 
                                             amount={order.totalPrice}
-                                            onSuccess={successPaymentHandler}
-                                        />
+                                            // onSuccess={successPaymentHandler}
+                                            onClick={handleButtonClick}
+
+                                            />
                                     )}
                                 </ListGroup.Item>
                             )}
