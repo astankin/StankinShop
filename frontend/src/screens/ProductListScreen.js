@@ -14,11 +14,11 @@ function ProductListScreen() {
     const navigate = useNavigate();  // Use useNavigate to replace history.push
     const location = useLocation();  // Use useLocation to replace history.location
 
-    const productList = useSelector(state => state.productList);
-    const { loading, error, products, pages, page } = productList;
+    const productList = useSelector((state) => state.productList);
+    const { loading, error, products, page, pages } = productList;    
 
-    // const productDelete = useSelector(state => state.productDelete);
-    // const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDelete;
+    const productDelete = useSelector(state => state.productDelete);
+    const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDelete;
 
     // const productCreate = useSelector(state => state.productCreate);
     // const { loading: loadingCreate, error: errorCreate, success: successCreate, product: createdProduct } = productCreate;
@@ -34,7 +34,7 @@ function ProductListScreen() {
         if (!userInfo.isAdmin) {
             navigate('/login');
         }else{
-            dispatch(listProducts(keyword)); // TODO 
+            dispatch(listProducts()); // TODO 
         }
 
         // if (successCreate) {
@@ -43,11 +43,11 @@ function ProductListScreen() {
         //     dispatch(listProducts(keyword));
         // }
 
-    }, [dispatch, navigate, userInfo, keyword]);
+    }, [dispatch, navigate, userInfo, successDelete]);
 
     const deleteHandler = (id) => {
         if (window.confirm('Are you sure you want to delete this product?')) {
-            // dispatch(deleteProduct(id));
+            dispatch(deleteProduct(id));
         }
     };
 
@@ -69,10 +69,10 @@ function ProductListScreen() {
                 </Col>
             </Row>
 
-            {/* {loadingDelete && <Loader />}
+            {loadingDelete && <Loader />}
             {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
 
-            {loadingCreate && <Loader />}
+            {/* {loadingCreate && <Loader />}
             {errorCreate && <Message variant='danger'>{errorCreate}</Message>} */}
 
             {loading ? (
