@@ -32,7 +32,7 @@ import {
     USER_UPDATE_SUCCESS,
     USER_UPDATE_FAIL,
     USER_UPDATE_RESET,
- } from '../constants/userConstant';
+ } from '../constants/userConstants';
 
 
  export const userLoginReducer = (state = {}, action) =>{

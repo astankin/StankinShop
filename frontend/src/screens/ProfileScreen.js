@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Form, Button, Row, Col, Table } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,7 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
-import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstant";
+import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 import { listMyOrders } from "../actions/orderActions";
 
 function ProfileScreen() {
@@ -45,7 +45,7 @@ function ProfileScreen() {
         setEmail(user.email);
       }
     }
-  }, [dispatch, userInfo, user, success]);
+  }, [dispatch, userInfo, user, success, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();

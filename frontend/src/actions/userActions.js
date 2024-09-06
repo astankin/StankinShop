@@ -34,7 +34,7 @@ import {
     USER_UPDATE_FAIL,
     
 
- } from '../constants/userConstant';
+ } from '../constants/userConstants';
 
 import { ORDER_LIST_MY_RESET } from '../constants/orderConstants'
 

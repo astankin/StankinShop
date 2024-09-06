@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { PayPalButton } from 'react-paypal-button-v2';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { getOrderDetails, payOrder, deliverOrder, setOrderAsPaid } from '../actions/orderActions';
+import { getOrderDetails, payOrder, deliverOrder } from '../actions/orderActions';
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../constants/orderConstants';
 
 
@@ -62,9 +62,9 @@ function OrderScreen() {
         dispatch(payOrder(orderId, paymentResult));
     };
 
-    const handleButtonClick = () => {
-        dispatch(setOrderAsPaid(order));
-    };
+    // const handleButtonClick = () => {
+    //     dispatch(setOrderAsPaid(order));
+    // };
 
     const deliverHandler = () => {
         dispatch(deliverOrder(order));
