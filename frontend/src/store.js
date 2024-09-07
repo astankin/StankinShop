@@ -31,7 +31,7 @@ import {
     orderPayReducer,
     orderListMyReducer,
     orderListReducer,
-    // orderDeliverReducer,
+    orderDeliverReducer,
 } from './reducers/orderReducers';
 
 // Combine reducers
@@ -58,7 +58,7 @@ const reducer = {
     orderPay: orderPayReducer,
     orderListMy: orderListMyReducer,
     orderList: orderListReducer,
-    // orderDeliver: orderDeliverReducer,
+    orderDeliver: orderDeliverReducer,
 };
 
 // Load initial state from localStorage

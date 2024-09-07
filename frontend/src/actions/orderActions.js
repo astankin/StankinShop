@@ -195,7 +195,7 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
                 : error.message,
         })
     }
-}
+};
 
 
 

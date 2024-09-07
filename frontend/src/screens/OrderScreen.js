@@ -62,10 +62,6 @@ function OrderScreen() {
         dispatch(payOrder(orderId, paymentResult));
     };
 
-    // const handleButtonClick = () => {
-    //     dispatch(setOrderAsPaid(order));
-    // };
-
     const deliverHandler = () => {
         dispatch(deliverOrder(order));
     };

@@ -130,6 +130,24 @@ def updateOrderToPaid(request, pk):
         return Response({'error': 'Order not found'}, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def updateOrderToDelivered(request, pk):
+    try:
+        # Retrieve the order by ID
+        order = Order.objects.get(_id=pk)
+        
+        # Update the order status
+        order.isDelivered = True
+        order.deliveredAt = datetime.now()
+        order.save()
+
+        return Response({'message': 'Order was delivered'})
+    except Order.DoesNotExist:
+        return Response({'error': 'Order not found'}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 
