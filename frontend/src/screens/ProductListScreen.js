@@ -100,7 +100,14 @@ function ProductListScreen() {
         <Message variant="danger">{error}</Message>
       ) : (
         <div>
-          <Table striped bordered hover responsive className="table-sm">
+          <Table
+          striped
+          bordered
+          hover
+          responsive
+          className="table-sm"
+          style={{ textAlign: "center", verticalAlign: "middle" }}
+        >
             <thead>
               <tr>
                 <th>ID</th>

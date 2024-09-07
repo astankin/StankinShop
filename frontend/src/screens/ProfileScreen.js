@@ -127,7 +127,14 @@ function ProfileScreen() {
         ) : errorOrders ? (
           <Message variant="danger">{errorOrders}</Message>
         ) : (
-          <Table striped responsive className="table-sm">
+          <Table
+          striped
+          bordered
+          hover
+          responsive
+          className="table-sm"
+          style={{ textAlign: "center", verticalAlign: "middle" }}
+        >
             <thead>
               <tr>
                 <th>ID</th>
