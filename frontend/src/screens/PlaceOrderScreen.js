@@ -144,7 +144,7 @@ function PlaceOrderScreen() {
                                 {error && <Message variant="danger">{error}</Message>}
                             </ListGroup.Item>
 
-                            <ListGroup.Item>
+                            <ListGroup.Item className="d-flex justify-content-center">
                                 <Button
                                     type="button"
                                     className="btn-block"

@@ -187,7 +187,6 @@ function OrderScreen() {
                                         <PayPalButton 
                                             amount={order.totalPrice}
                                             onSuccess={successPaymentHandler}
-                                            // onClick={handleButtonClick}
 
                                             />
                                     )}
@@ -197,7 +196,7 @@ function OrderScreen() {
 
                         {loadingDeliver && <Loader />}
                         {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
-                            <ListGroup.Item>
+                            <ListGroup.Item className="d-flex justify-content-center">
                                 <Button
                                     type="button"
                                     className="btn btn-block"
