@@ -76,7 +76,7 @@ import { CART_CLEAR_ITEMS } from '../constants/cartConstants';
  };
 
  export const logout = () => (dispatch) => {
-    localStorage.removeItem('userinfo')
+    localStorage.removeItem('userInfo')
     localStorage.removeItem('shippingAddress')
     
     dispatch({type: USER_LOGOUT})
