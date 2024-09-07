@@ -6,7 +6,7 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 // import Paginate from '../components/Paginate';
 import { listProducts, deleteProduct, createProduct } from '../actions/productActions';
-// import { PRODUCT_CREATE_RESET } from '../constants/productConstants';
+import { PRODUCT_CREATE_RESET } from '../constants/productConstants';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 function ProductListScreen() {
@@ -20,8 +20,8 @@ function ProductListScreen() {
     const productDelete = useSelector(state => state.productDelete);
     const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDelete;
 
-    // const productCreate = useSelector(state => state.productCreate);
-    // const { loading: loadingCreate, error: errorCreate, success: successCreate, product: createdProduct } = productCreate;
+    const productCreate = useSelector(state => state.productCreate);
+    const { loading: loadingCreate, error: errorCreate, success: successCreate, product: createdProduct } = productCreate;
 
     const userLogin = useSelector(state => state.userLogin);
     const { userInfo } = userLogin;
@@ -29,21 +29,19 @@ function ProductListScreen() {
     let keyword = location.search;  // Replacing history.location.search with useLocation().search
 
     useEffect(() => {
-        // dispatch({ type: PRODUCT_CREATE_RESET });
+        dispatch({ type: PRODUCT_CREATE_RESET });
 
         if (!userInfo.isAdmin) {
             navigate('/login');
-        }else{
-            dispatch(listProducts()); // TODO 
+        }
+    
+        if (successCreate) {
+            navigate(`/admin/product/${createdProduct._id}/edit`);
+        } else {
+            dispatch(listProducts(keyword));
         }
 
-        // if (successCreate) {
-        //     navigate(`/admin/product/${createdProduct._id}/edit`);
-        // } else {
-        //     dispatch(listProducts(keyword));
-        // }
-
-    }, [dispatch, navigate, userInfo, successDelete]);
+    }, [dispatch, navigate, userInfo, successDelete, successCreate, createdProduct, keyword]);
 
     const deleteHandler = (id) => {
         if (window.confirm('Are you sure you want to delete this product?')) {
@@ -52,7 +50,7 @@ function ProductListScreen() {
     };
 
     const createProductHandler = () => {
-        // dispatch(createProduct());
+        dispatch(createProduct());
     };
 
     return (
@@ -72,8 +70,8 @@ function ProductListScreen() {
             {loadingDelete && <Loader />}
             {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
 
-            {/* {loadingCreate && <Loader />}
-            {errorCreate && <Message variant='danger'>{errorCreate}</Message>} */}
+            {loadingCreate && <Loader />}
+            {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
 
             {loading ? (
                 <Loader />
