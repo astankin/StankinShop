@@ -132,7 +132,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
                 : error.message,
         })
     }
-};
+}
 
 
 
