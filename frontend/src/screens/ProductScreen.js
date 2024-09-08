@@ -144,7 +144,7 @@ function ProductScreen() {
 
                     <Row>
                         <Col md={6}>
-                            <h4>Reviews</h4>
+                            <h4 className='mt-3'>Reviews</h4>
                             {product.reviews.length === 0 && <Message variant='info'>No Reviews</Message>}
 
                             <ListGroup variant='flush'>
@@ -183,7 +183,7 @@ function ProductScreen() {
                                             </Form.Group>
 
                                             <Form.Group controlId='comment'>
-                                                <Form.Label>Review</Form.Label>
+                                                <Form.Label className='mt-3'>Review</Form.Label>
                                                 <Form.Control
                                                     as='textarea'
                                                     rows='5'
@@ -193,6 +193,7 @@ function ProductScreen() {
                                             </Form.Group>
 
                                             <Button
+                                                className='mt-3'
                                                 disabled={loadingProductReview}
                                                 type='submit'
                                                 variant='primary'
