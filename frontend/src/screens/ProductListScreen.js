@@ -5,7 +5,7 @@ import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-// import Paginate from '../components/Paginate';
+import Paginate from '../components/Paginate';
 import {
   listProducts,
   deleteProduct,
@@ -154,7 +154,7 @@ function ProductListScreen() {
               ))}
             </tbody>
           </Table>
-          {/* <Paginate pages={pages} page={page} isAdmin={true} /> */}
+          <Paginate pages={pages} page={page} isAdmin={true} />
         </div>
       )}
     </div>

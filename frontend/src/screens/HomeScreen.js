@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Product from '../components/Product';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-// import Paginate from '../components/Paginate';
+import Paginate from '../components/Paginate';
 // import ProductCarousel from '../components/ProductCarousel';
 import { listProducts } from '../actions/productActions';
 
@@ -47,7 +47,7 @@ function HomeScreen() {
                               </Col>
                           ))}
                       </Row>
-                      {/* <Paginate page={page} pages={pages} keyword={location.search} /> */}
+                      <Paginate page={page} pages={pages} keyword={location.search} />
                   </>
               )}
           </div>
