@@ -22,15 +22,14 @@ function SearchBox() {
                 type='text'
                 name='q'
                 onChange={(e) => setKeyword(e.target.value)}
-                className='mr-sm-2'
                 placeholder='Search products...'
             />
             <Button
                 type='submit'
                 variant='outline-success'
-                className='p-2'
+                className='p-20'
             >
-                Submit
+                SEARCH
             </Button>
         </Form>
     );
