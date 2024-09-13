@@ -180,7 +180,7 @@ function ProductEditScreen() {
             <Form.Group controlId="category">
               <Form.Label className="mt-3">Category</Form.Label>
               <Form.Control
-                type="number"
+                type="text"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               ></Form.Control>
